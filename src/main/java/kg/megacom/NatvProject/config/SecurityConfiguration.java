@@ -24,7 +24,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-//                .antMatchers("/api/v1/pay").authenticated()
+                .antMatchers("/api/v1/personal-account").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()
