@@ -11,4 +11,5 @@ public interface AdvertisementService {
     AdvertisementDto findById(Long id);
     AdvertisementDto save(AdvertisementDto advertisementDto);
     List<AdvertisementDto> findAllAdvertisementsByClient(String email);
+    List<AdvertisementDto> findAll();
 }

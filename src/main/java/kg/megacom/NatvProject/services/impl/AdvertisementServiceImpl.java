@@ -60,5 +60,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         return advertisementMapper.toDTOList(advertisementRepo.findAllByClientEmail(email));
     }
 
+    @Override
+    public List<AdvertisementDto> findAll() {
+        return advertisementMapper.toDTOList(advertisementRepo.findAll());
+    }
+
 
 }
