@@ -52,7 +52,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public BalanceDto addMoney(double sum, String clientEmail) {
         Balance balance = balanceRepo.findByClientEmail(clientEmail);
-        balance.setBalance(sum);
+        balance.setBalance(balance.getBalance() + sum);
 
         log.info("Баланс клиента с email «"+ clientEmail + "» был пополнен на сумму " + sum);
         return balanceMapper.toDto(balanceRepo.save(balance));

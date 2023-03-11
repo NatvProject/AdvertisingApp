@@ -5,11 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import kg.megacom.NatvProject.models.dtos.AdvertisementDto;
 import kg.megacom.NatvProject.models.dtos.BalanceDto;
 import kg.megacom.NatvProject.models.dtos.BannerDto;
-import kg.megacom.NatvProject.services.AdvertisementService;
-import kg.megacom.NatvProject.services.BalanceService;
-import kg.megacom.NatvProject.services.BannerService;
-import kg.megacom.NatvProject.services.JwtService;
+import kg.megacom.NatvProject.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,6 +27,7 @@ public class PersonalAccountController {
     private final BalanceService balanceService;
     private final BannerService bannerService;
     private final AdvertisementService advertisementService;
+    private final PaymentService paymentService;
 
     @PutMapping("/addMoney")
     @ApiOperation(value = "Пополнение баланса клиента")
@@ -47,6 +46,19 @@ public class PersonalAccountController {
     public List<AdvertisementDto> findAllAds() {
         return advertisementService.findAllAdvertisementsByClient(extractClientFromToken());
     }
+
+    @PutMapping("/AdPayment/{id}")
+    @ApiOperation(value = "Оплата за текстовое объявление")
+    public ResponseEntity<?> payForAdvertisement(@PathVariable Long id){
+        return paymentService.payForAdvertisement(id);
+    }
+
+    @PutMapping("/bannerPayment/{id}")
+    @ApiOperation(value = "Оплата за баннерное объявление")
+    public ResponseEntity<?> payForBanner(@PathVariable Long id){
+        return paymentService.payForBanner(id);
+    }
+
 
     private String extractClientFromToken(){
         String token = ((ServletRequestAttributes) Objects.requireNonNull(
