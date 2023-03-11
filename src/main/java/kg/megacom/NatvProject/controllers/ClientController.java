@@ -21,12 +21,37 @@ import static kg.megacom.NatvProject.config.SpringFoxConfig.CLIENT;
 @RequiredArgsConstructor
 public class ClientController {
 
+    private final ClientService clientService;
     private final AuthenticationService service;
 
     @PostMapping("/auth")
     @ApiOperation(value = "Аутентификация клиента")
     public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO request) {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Вывод клиента по ID")
+    public ClientDto findById(@PathVariable Long id){
+        return clientService.findById(id);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "Вывод списка клиентов")
+    public List<ClientDto> findAll(){
+        return clientService.findAll();
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Изменение информации об аккаунте")
+    public ClientDto update(@RequestBody ClientDto clientDto){
+        return clientService.update(clientDto);
+    }
+
+    @PutMapping("/deactivate/{id}")
+    @ApiOperation(value = "Деактивация клиента по ID")
+    public void deactivate(@PathVariable Long id){
+        clientService.deactivate(id);
     }
 
 }
